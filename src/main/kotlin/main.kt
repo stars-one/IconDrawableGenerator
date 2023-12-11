@@ -11,11 +11,16 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.window.Window
 import androidx.compose.ui.window.application
+import java.io.File
 
 @Composable
 @Preview
 fun App() {
     var text by remember { mutableStateOf("Hello, World!") }
+
+    val ffmpegFile = File(System.getProperty("compose.application.resources.dir")).resolve("remixicon_v3.7.0.json.html")
+
+    println(ffmpegFile.path)
 
     MaterialTheme {
         Button(

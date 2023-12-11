@@ -28,8 +28,16 @@ compose.desktop {
 
         nativeDistributions {
             targetFormats(TargetFormat.Dmg, TargetFormat.Msi, TargetFormat.Deb)
-            packageName = "KotlinJvmComposeDesktopApplication"
+            packageName = "Android图标生成器"
             packageVersion = "1.0.0"
+
+            //开启快捷方式
+            windows{
+                this.upgradeUuid = "bcfd283d-d6d2-4a73-a4ee-d941572c3864"
+                shortcut = true
+            }
+
+            appResourcesRootDir.set(project.layout.projectDirectory.dir("resources"))
         }
     }
 }
