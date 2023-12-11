@@ -20,6 +20,11 @@ dependencies {
 
     // Include the Test API
     testImplementation(compose.desktop.uiTestJUnit4)
+
+    implementation(compose.runtime)
+    implementation(compose.foundation)
+    implementation(compose.material)
+    implementation(compose.material3)
 }
 
 compose.desktop {
