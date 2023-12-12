@@ -1,5 +1,7 @@
 package com.example.common.util
 
+import com.google.gson.Gson
+import com.google.gson.internal.`$Gson$Types`
 import java.awt.Toolkit
 import java.awt.datatransfer.DataFlavor
 import java.awt.datatransfer.StringSelection
@@ -20,6 +22,31 @@ object CommonUtil {
         // 创建剪切板内容
         val systemClipboard = Toolkit.getDefaultToolkit().systemClipboard
         systemClipboard.setContents(FileTransferable(file), null)
+    }
+
+    /**
+     * 将json数据转为List<T>
+     *
+     * @param T 数据类型
+     * @return
+     */
+    fun <T> String.parseJsonToList(clazz: Class<T>): List<T> {
+        val gson = Gson()
+        val type = `$Gson$Types`.newParameterizedTypeWithOwner(null, ArrayList::class.java, clazz)
+        val data: List<T> = gson.fromJson(this, type)
+        return data
+    }
+
+    /**
+     * 将json字符串数据转为某个类
+     *
+     * @param T
+     * @return
+     */
+    inline fun <reified T> String.parseJsonToObject(): T {
+        val gson = Gson()
+        val result = gson.fromJson(this, T::class.java)
+        return result
     }
 }
 
