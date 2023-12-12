@@ -11,8 +11,24 @@ object RemixIconDataUtil {
     const val dirPath = "remixicon-data"
     fun initResource(): List<IconGroup> {
 
-        val tagJson = File(resourceDir).resolve("remixicon_tags.json").readText()
-        val remixIconJson = File(resourceDir).resolve("remixicon_v3.7.0.json").readText()
+
+        val pair = if (resourceDir == null) {
+            //例: D:\java-project\IconDrawableGenerator
+            val projectRootDir = File("").absolutePath
+
+            val tagJson = File(projectRootDir,"resources\\common\\remixicon_tags.json").readText()
+            val remixIconJson =
+                File(projectRootDir,"\\resources\\common\\remixicon_v3.7.0.json").readText()
+            Pair(tagJson, remixIconJson)
+
+        } else {
+            val tagJson = File(resourceDir).resolve("remixicon_tags.json").readText()
+            val remixIconJson = File(resourceDir).resolve("remixicon_v3.7.0.json").readText()
+            Pair(tagJson, remixIconJson)
+        }
+
+        val tagJson = pair.first
+        val remixIconJson = pair.second
 
 
         val remixIconJsonObject = JsonParser.parseString(remixIconJson)
@@ -56,6 +72,9 @@ object RemixIconDataUtil {
     }
 
     fun getSvgDirFile(): File {
+        if (resourceDir == null) {
+            return File("D:\\java-project\\IconDrawableGenerator\\build\\compose\\binaries\\main\\app\\IconDrawableGenerator\\app\\resources\\remixicon-data")
+        }
         return File(resourceDir, dirPath)
     }
 }

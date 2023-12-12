@@ -27,6 +27,12 @@ dependencies {
     implementation(compose.material3)
 
     implementation("com.google.code.gson:gson:2.10.1")
+
+    //svg转png
+    implementation ("org.apache.xmlgraphics:batik-transcoder:1.14")
+    implementation ("org.apache.xmlgraphics:batik-codec:1.14")
+    implementation ("commons-codec:commons-codec:1.15")
+
     //implementation("com.squareup.okhttp3:okhttp:4.11.0")
 
 }
