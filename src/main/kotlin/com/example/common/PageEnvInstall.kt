@@ -1,31 +1,30 @@
 package com.example.common
 
 import androidx.compose.foundation.*
-import androidx.compose.foundation.gestures.Orientation
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.grid.GridCells
-import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.rememberLazyListState
-import androidx.compose.material3.LocalTextStyle
+import androidx.compose.material3.AlertDialog
+import androidx.compose.material3.Button
 import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.loadSvgPainter
 import androidx.compose.ui.unit.Density
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.example.common.toast.ComposeToast
 import com.example.common.util.CommonUtil
 import com.example.common.util.Icon
 import com.example.common.util.RemixIconDataUtil
-import com.google.gson.annotations.Until
 import java.io.File
 
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun PageEnvInstall() {
+
 
     val list = RemixIconDataUtil.initResource()
 
@@ -64,12 +63,6 @@ fun PageEnvInstall() {
                         val rowData = iconList.subList(start, end)
                         RemixIconItemViewRow(rowData)
                     }
-
-                    //LazyVerticalGrid(GridCells.Adaptive(minSize = 24.dp), modifier = Modifier.wrapContentHeight()) {
-                    //    items(iconList.size) { index ->
-                    //        RemixIconItemView(iconList[index])
-                    //    }
-                    //}
                 }
             }
         }
@@ -122,6 +115,22 @@ fun RemixIconItemView(icon: Icon) {
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun RemixIconSingleView(svgFile: File) {
+    var isDialogOpen by remember { mutableStateOf(false) }
+
+    if (isDialogOpen) {
+        AlertDialog(
+            onDismissRequest = { },
+            confirmButton = {
+                Button(onClick = { isDialogOpen = false }) {
+                    Text("OK")
+                }
+            },
+            title = { Text("Alert Dialog") },
+            text = { Text("Lore ipsum") },
+        )
+    }
+
+
     Column(
         modifier = Modifier.size(120.dp, 100.dp),
         horizontalAlignment = Alignment.CenterHorizontally
@@ -132,7 +141,10 @@ fun RemixIconSingleView(svgFile: File) {
             modifier = Modifier.width(24.dp).height(24.dp).onClick {
                 val file = svgFile
                 CommonUtil.copyFile(file)
-                println("复制成功")
+
+                ComposeToast.show("复制成功!")
+
+                //isDialogOpen = true
             }
         )
         Spacer(modifier = Modifier.height(8.dp))
