@@ -2,6 +2,7 @@ package com.example.common
 
 import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.runtime.Composable
@@ -12,6 +13,7 @@ import androidx.compose.ui.unit.dp
 import com.example.common.util.CommonUtil
 import com.example.common.util.Icon
 import com.example.common.util.RemixIconDataUtil
+import com.google.gson.annotations.Until
 import java.io.File
 
 
@@ -21,25 +23,51 @@ fun PageEnvInstall() {
 
     val list = RemixIconDataUtil.initResource()
 
-    Column(
+
+    LazyColumn(
         modifier = Modifier
             .fillMaxWidth()
             .fillMaxHeight()
-            .padding(16.dp)
+            .padding(16.dp),
+        verticalArrangement = Arrangement.spacedBy(16.dp),
     ) {
 
-        list.forEach {
-            MyCard(it.groupName) {
-                val iconList = it.data
-                LazyVerticalGrid(GridCells.Adaptive(minSize = 24.dp)) {
-                    items(iconList.size) { index ->
-                        RemixIconItemView(iconList[index])
+        items(list.size) {
+            val item = list[it]
+            MyCard(item.groupName + "( ${item.data.size}个)") {
+                val iconList = item.data
+
+                val spanCount = 10
+                val size = iconList.size
+                val rows = (size / spanCount) + 1
+
+                for (i in 0 until rows) {
+                    val start = i * spanCount
+                    var end = (i + 1) * spanCount
+                    if (end > size) {
+                        end = size
                     }
+
+                    val rowData = iconList.subList(start, end)
+                    RemixIconItemViewRow(rowData)
                 }
 
+                //LazyVerticalGrid(GridCells.Adaptive(minSize = 24.dp), modifier = Modifier.wrapContentHeight()) {
+                //    items(iconList.size) { index ->
+                //        RemixIconItemView(iconList[index])
+                //    }
+                //}
             }
         }
+    }
+}
 
+@Composable
+fun RemixIconItemViewRow(list: List<Icon>) {
+    Row {
+        list.forEach {
+            RemixIconItemView(it)
+        }
     }
 }
 
