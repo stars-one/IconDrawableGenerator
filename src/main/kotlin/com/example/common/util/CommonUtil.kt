@@ -2,13 +2,18 @@ package com.example.common.util
 
 import com.google.gson.Gson
 import com.google.gson.internal.`$Gson$Types`
+import org.apache.batik.anim.dom.SAXSVGDocumentFactory
+import org.apache.batik.svggen.SVGGraphics2D
+import org.jetbrains.skia.svg.SVGDOM
 import java.awt.Toolkit
 import java.awt.datatransfer.DataFlavor
 import java.awt.datatransfer.StringSelection
 import java.awt.datatransfer.Transferable
 import java.awt.datatransfer.UnsupportedFlavorException
+import java.awt.image.BufferedImage
 import java.io.File
 import java.io.IOException
+import javax.imageio.ImageIO
 
 object CommonUtil {
 
@@ -47,6 +52,10 @@ object CommonUtil {
         val gson = Gson()
         val result = gson.fromJson(this, T::class.java)
         return result
+    }
+
+    fun svgToPng(svgFile:File,pngFile:File){
+        SvgToPngUtil().toPngFileFromString(svgFile.readText(),"white",pngFile.path,null)
     }
 }
 

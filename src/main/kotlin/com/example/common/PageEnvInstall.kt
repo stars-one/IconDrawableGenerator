@@ -144,6 +144,7 @@ fun RemixIconSingleView(svgFile: File) {
 
                 ComposeToast.show("复制成功!")
 
+                CommonUtil.svgToPng(file,File("D:/jkkk.png"))
                 //isDialogOpen = true
             }
         )
