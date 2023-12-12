@@ -25,6 +25,10 @@ dependencies {
     implementation(compose.foundation)
     implementation(compose.material)
     implementation(compose.material3)
+
+    implementation("com.google.code.gson:gson:2.10.1")
+    //implementation("com.squareup.okhttp3:okhttp:4.11.0")
+
 }
 
 compose.desktop {
@@ -33,7 +37,7 @@ compose.desktop {
 
         nativeDistributions {
             targetFormats(TargetFormat.Dmg, TargetFormat.Msi, TargetFormat.Deb)
-            packageName = "Android图标生成器"
+            packageName = "IconDrawableGenerator"
             packageVersion = "1.0.0"
 
             //开启快捷方式
