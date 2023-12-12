@@ -5,11 +5,15 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
+import androidx.compose.material3.LocalTextStyle
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.loadSvgPainter
 import androidx.compose.ui.unit.Density
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import com.example.common.util.CommonUtil
 import com.example.common.util.Icon
 import com.example.common.util.RemixIconDataUtil
@@ -95,13 +99,18 @@ fun RemixIconItemView(icon: Icon) {
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun RemixIconSingleView(svgFile: File) {
-    Image(
-        loadSvgPainter(svgFile.inputStream(), Density(24f)),
-        contentDescription = null,
-        modifier = Modifier.width(24.dp).height(24.dp).onClick {
-            val file = svgFile
-            CommonUtil.copyFile(file)
-            println("复制成功")
-        }
-    )
+    Column(modifier = Modifier.size(100.dp,100.dp), verticalArrangement = Arrangement.Center, horizontalAlignment = Alignment.CenterHorizontally) {
+        Image(
+            loadSvgPainter(svgFile.inputStream(), Density(24f)),
+            contentDescription = null,
+            modifier = Modifier.width(24.dp).height(24.dp).onClick {
+                val file = svgFile
+                CommonUtil.copyFile(file)
+                println("复制成功")
+            }
+        )
+        Spacer(modifier = Modifier.height(8.dp))
+        Text(svgFile.nameWithoutExtension, fontSize = 12.sp)
+    }
+
 }
