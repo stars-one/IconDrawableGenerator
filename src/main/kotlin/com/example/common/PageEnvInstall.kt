@@ -6,10 +6,15 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
+import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.input.pointer.PointerEventType
+import androidx.compose.ui.input.pointer.onPointerEvent
 import androidx.compose.ui.res.loadSvgPainter
 import androidx.compose.ui.unit.Density
 import androidx.compose.ui.unit.dp
@@ -87,6 +92,7 @@ fun RemixIconItemViewRow(list: List<Icon>) {
     }
 }
 
+@OptIn(ExperimentalComposeUiApi::class)
 @Composable
 fun RemixIconItemView(icon: Icon) {
 
@@ -102,7 +108,8 @@ fun RemixIconItemView(icon: Icon) {
     }
 
     Column(
-        modifier = Modifier.wrapContentWidth(),
+        modifier = Modifier
+            .wrapContentWidth(),
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
@@ -112,7 +119,7 @@ fun RemixIconItemView(icon: Icon) {
     }
 }
 
-@OptIn(ExperimentalFoundationApi::class)
+@OptIn(ExperimentalFoundationApi::class, ExperimentalComposeUiApi::class)
 @Composable
 fun RemixIconSingleView(svgFile: File) {
     var isDialogOpen by remember { mutableStateOf(false) }
@@ -130,23 +137,34 @@ fun RemixIconSingleView(svgFile: File) {
         )
     }
 
+    var active by remember { mutableStateOf(false) }
 
     Column(
-        modifier = Modifier.size(120.dp, 100.dp),
-        horizontalAlignment = Alignment.CenterHorizontally
-    ) {
-        Image(
-            loadSvgPainter(svgFile.inputStream(), Density(24f)),
-            contentDescription = null,
-            modifier = Modifier.width(24.dp).height(24.dp).onClick {
+        modifier = Modifier
+            .size(120.dp, 100.dp)
+            .background(color =  if (active) MaterialTheme.colorScheme.background else Color.White)
+            .border(width = 1.dp, color = if (active) MaterialTheme.colorScheme.outline else Color.White)
+            .onPointerEvent(PointerEventType.Enter) { active = true }
+            .onPointerEvent(PointerEventType.Exit) { active = false }
+            .onClick {
                 val file = svgFile
                 CommonUtil.copyFile(file)
 
                 ComposeToast.show("复制成功!")
 
-                CommonUtil.svgToPng(file,File("D:/jkkk.png"))
+                //todo 输出文件png自定义
+                //CommonUtil.svgToPng(file, File("D:/jkkk.png"))
+
                 //isDialogOpen = true
             }
+        ,
+
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
+        Image(
+            loadSvgPainter(svgFile.inputStream(), Density(24f)),
+            contentDescription = null,
+            modifier = Modifier.width(24.dp).height(24.dp)
         )
         Spacer(modifier = Modifier.height(8.dp))
         Text(svgFile.nameWithoutExtension, fontSize = 12.sp)
