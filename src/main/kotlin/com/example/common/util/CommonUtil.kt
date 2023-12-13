@@ -5,6 +5,7 @@ import com.google.gson.internal.`$Gson$Types`
 import org.apache.batik.anim.dom.SAXSVGDocumentFactory
 import org.apache.batik.svggen.SVGGraphics2D
 import org.jetbrains.skia.svg.SVGDOM
+import java.awt.Color
 import java.awt.Toolkit
 import java.awt.datatransfer.DataFlavor
 import java.awt.datatransfer.StringSelection
@@ -23,7 +24,7 @@ object CommonUtil {
         systemClipboard.setContents(selection, null)
     }
 
-    fun copyFile(file: File){
+    fun copyFile(file: File) {
         // 创建剪切板内容
         val systemClipboard = Toolkit.getDefaultToolkit().systemClipboard
         systemClipboard.setContents(FileTransferable(file), null)
@@ -54,8 +55,8 @@ object CommonUtil {
         return result
     }
 
-    fun svgToPng(svgFile:File,pngFile:File){
-        SvgToPngUtil().toPngFileFromString(svgFile.readText(),"white",pngFile.path,null)
+    fun svgToPng(svgFile: File, pngFile: File) {
+        SvgToPngUtil().toPngFileFromString(svgFile.readText(), Color.white, pngFile)
     }
 }
 
