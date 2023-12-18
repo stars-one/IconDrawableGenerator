@@ -1,6 +1,19 @@
-[![official project](http://jb.gg/badges/official.svg)](https://confluence.jetbrains.com/display/ALL/JetBrains+on+GitHub)
-[![License](https://img.shields.io/badge/License-Apache_2.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
-# [Compose Multiplatform](https://github.com/JetBrains/compose-multiplatform) desktop application
+
+# Android图标生成器
+
+
+## 项目说明
+
+如果想要升级remixicon图标版本,需要修改下面的2个文件,并将代码中的RemixIconDataUtil里的jsonName改为下面的新版本的json名称即可(不需要common开头)
+
+- `common/remixicon_v4.0.0.json`是从官网上下载的,为了规范,请以版本名结尾
+
+![](https://img2023.cnblogs.com/blog/1210268/202312/1210268-20231218104014035-701783491.png)
+
+- `remixicon_tags.json`是https://github.com/Remix-Design/RemixIcon/blob/master/tags.json的数据,也需要更新
+
+
+# 说明
 
 > **Note**
 > If you have any issues, please report them on [GitHub](https://github.com/JetBrains/compose-multiplatform/issues).
