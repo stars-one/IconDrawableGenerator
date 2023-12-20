@@ -51,11 +51,12 @@ compose.desktop {
         nativeDistributions {
             targetFormats(TargetFormat.Dmg, TargetFormat.Msi, TargetFormat.Deb)
             packageName = "IconDrawableGenerator"
-            packageVersion = "1.0.0"
+            packageVersion = "1.0.1"
+
 
             //开启快捷方式
             windows{
-                this.upgradeUuid = "bcfd283d-d6d2-4a73-a4ee-d941572c3864"
+                this.upgradeUuid = "ce843e03-537e-42c0-9c2e-492d231e6f23"
                 shortcut = true
             }
 
