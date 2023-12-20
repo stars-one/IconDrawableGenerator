@@ -1,4 +1,4 @@
-package com.example.common.toast
+package site.starsone.drawablegenerator.toast
 
 import androidx.compose.animation.*
 import androidx.compose.foundation.layout.Box

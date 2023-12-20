@@ -1,10 +1,10 @@
-package com.example.common
+package site.starsone.drawablegenerator
 
 import androidx.compose.foundation.layout.Row
 import androidx.compose.material.Surface
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.*
-import com.example.common.toast.ComposeToastContainer
+import site.starsone.drawablegenerator.toast.ComposeToastContainer
 
 @Composable
 fun App() {
@@ -18,7 +18,7 @@ fun App() {
 
                 Surface() {
                     when (selectIndex) {
-                        0 -> PageEnvInstall()
+                        0 -> RemixIconPage()
                     }
                 }
 

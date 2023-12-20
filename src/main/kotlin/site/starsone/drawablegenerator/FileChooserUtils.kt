@@ -1,4 +1,4 @@
-package com.example.common
+package site.starsone.drawablegenerator
 
 import java.io.File
 import javax.swing.JFileChooser

@@ -1,11 +1,13 @@
-package com.example.common.util
+package site.starsone.drawablegenerator.util
 
 import com.google.gson.Gson
 import com.google.gson.internal.`$Gson$Types`
 import org.apache.batik.anim.dom.SAXSVGDocumentFactory
 import org.apache.batik.svggen.SVGGraphics2D
 import org.jetbrains.skia.svg.SVGDOM
+import site.starsone.svg2vector.SvgUtils
 import java.awt.Color
+import java.awt.SystemColor.text
 import java.awt.Toolkit
 import java.awt.datatransfer.DataFlavor
 import java.awt.datatransfer.StringSelection
@@ -57,6 +59,16 @@ object CommonUtil {
 
     fun svgToPng(svgFile: File, pngFile: File) {
         SvgToPngUtil().toPngFileFromString(svgFile.readText(), Color.white, pngFile)
+    }
+
+    fun svgToXml(svgFile:File): File {
+        val outputFile = File(svgFile.parentFile,"cache/${svgFile.nameWithoutExtension.replace("-","_")}.xml").apply {
+            if (parentFile.exists().not()) {
+                parentFile.mkdirs()
+            }
+        }
+        SvgUtils.toXmlFile(svgFile,outputFile)
+        return outputFile
     }
 }
 
