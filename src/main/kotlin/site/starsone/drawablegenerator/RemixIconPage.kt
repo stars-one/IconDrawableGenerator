@@ -1,4 +1,4 @@
-package com.example.common
+package site.starsone.drawablegenerator
 
 import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
@@ -19,16 +19,16 @@ import androidx.compose.ui.res.loadSvgPainter
 import androidx.compose.ui.unit.Density
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.example.common.toast.ComposeToast
-import com.example.common.util.CommonUtil
-import com.example.common.util.Icon
-import com.example.common.util.RemixIconDataUtil
+import site.starsone.drawablegenerator.toast.ComposeToast
+import site.starsone.drawablegenerator.util.CommonUtil
+import site.starsone.drawablegenerator.util.Icon
+import site.starsone.drawablegenerator.util.RemixIconDataUtil
 import java.io.File
 
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
-fun PageEnvInstall() {
+fun RemixIconPage() {
 
 
     val list = RemixIconDataUtil.initResource()
@@ -147,10 +147,13 @@ fun RemixIconSingleView(svgFile: File) {
             .onPointerEvent(PointerEventType.Enter) { active = true }
             .onPointerEvent(PointerEventType.Exit) { active = false }
             .onClick {
-                val file = svgFile
-                CommonUtil.copyFile(file)
 
-                ComposeToast.show("复制成功!")
+                val outputFile = CommonUtil.svgToXml(svgFile)
+                CommonUtil.copyFile(outputFile)
+
+                ComposeToast.show("导出xml文件成功,可以直接粘贴!")
+
+                //todo 转为png或xml
 
                 //todo 输出文件png自定义
                 //CommonUtil.svgToPng(file, File("D:/jkkk.png"))

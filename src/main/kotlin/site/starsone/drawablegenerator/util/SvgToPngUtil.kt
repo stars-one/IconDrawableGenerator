@@ -1,4 +1,4 @@
-package com.example.common.util
+package site.starsone.drawablegenerator.util
 
 import org.apache.batik.anim.dom.SAXSVGDocumentFactory
 import org.apache.batik.gvt.renderer.ImageRenderer

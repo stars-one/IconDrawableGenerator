@@ -1,4 +1,4 @@
-package com.example.common.util
+package site.starsone.drawablegenerator.util
 
 import com.google.gson.Gson
 import com.google.gson.JsonParser
@@ -22,7 +22,7 @@ object RemixIconDataUtil {
 
             val tagJson = File(projectRootDir,"resources/common/remixicon_tags.json").readText()
             val remixIconJson =
-                File(projectRootDir,"/resources/common/${jsonName}").readText()
+                File(projectRootDir,"/resources/common/$jsonName").readText()
             Pair(tagJson, remixIconJson)
 
         } else {

@@ -8,6 +8,7 @@ plugins {
 repositories {
     mavenCentral()
     maven("https://maven.pkg.jetbrains.space/public/p/compose/dev")
+    maven("https://jitpack.io")
     google()
 }
 
@@ -32,6 +33,12 @@ dependencies {
     implementation ("org.apache.xmlgraphics:batik-transcoder:1.14")
     implementation ("org.apache.xmlgraphics:batik-codec:1.14")
     implementation ("commons-codec:commons-codec:1.15")
+
+    //svg转xml的库
+    implementation ("org.dom4j:dom4j:2.1.1")
+    implementation ("gov.nist.math:jama:1.0.3")
+
+    implementation ("com.github.stars-one:svg2vector:1.1")
 
     //implementation("com.squareup.okhttp3:okhttp:4.11.0")
 
