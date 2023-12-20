@@ -57,17 +57,28 @@ object CommonUtil {
         return result
     }
 
-    fun svgToPng(svgFile: File, pngFile: File) {
-        SvgToPngUtil().toPngFileFromString(svgFile.readText(), Color.white, pngFile)
+    /**
+     * svg转为png文件
+     * @param color 颜色
+     * @param size 宽度或高度(生成的png文件宽高一致)
+     */
+    fun svgToPng(svgFile: File,color:androidx.compose.ui.graphics.Color,size:Int):File {
+        val outputFile = File(svgFile.parentFile,"cache/${svgFile.nameWithoutExtension.replace("-","_")}.png").apply {
+            if (parentFile.exists().not()) {
+                parentFile.mkdirs()
+            }
+        }
+        SvgToPngUtil().toPngFileFromString(svgFile.readText(), color.toAwtColor(), outputFile,size,size)
+        return outputFile
     }
 
-    fun svgToXml(svgFile:File): File {
+    fun svgToXml(svgFile:File,size:Int): File {
         val outputFile = File(svgFile.parentFile,"cache/${svgFile.nameWithoutExtension.replace("-","_")}.xml").apply {
             if (parentFile.exists().not()) {
                 parentFile.mkdirs()
             }
         }
-        SvgUtils.toXmlFile(svgFile,outputFile)
+        SvgUtils.toXmlFile(svgFile,outputFile,size)
         return outputFile
     }
 }
@@ -93,4 +104,13 @@ private class FileTransferable(private val file: File) : Transferable {
     companion object {
         private val FILE_FLAVOR = DataFlavor.javaFileListFlavor
     }
+}
+
+/**
+ * 将compose的color转为awt包中的color
+ */
+fun androidx.compose.ui.graphics.Color.toAwtColor(): Color {
+    val color = this
+    val awtColor = Color(color.red,color.green,color.blue,color.alpha)
+    return awtColor
 }

@@ -37,12 +37,12 @@ class SvgToPngUtil {
     }
 
     @Throws(Exception::class)
-    fun toPngFileFromString(svg: String, backgroundColor: Color, outputFile: File) {
+    fun toPngFileFromString(svg: String, backgroundColor: Color, outputFile: File,width:Int=200, height:Int=200) {
         outputFile.outputStream().use { resultByteStream ->
 
             //得到png的二进制数据
             val imageBytes = ByteArrayOutputStream().use { bos ->
-                toPngFromReader(svg.reader(), bos, backgroundColor)
+                toPngFromReader(svg.reader(), bos, backgroundColor,width,height)
                 bos.toByteArray()
             }
 
