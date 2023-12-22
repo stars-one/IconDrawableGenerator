@@ -18,9 +18,12 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.pointer.PointerEventType
 import androidx.compose.ui.input.pointer.onPointerEvent
 import androidx.compose.ui.res.loadSvgPainter
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.Density
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.godaddy.android.colorpicker.ClassicColorPicker
+import com.godaddy.android.colorpicker.HsvColor
 import site.starsone.drawablegenerator.toast.ComposeToast
 import site.starsone.drawablegenerator.util.CommonUtil
 import site.starsone.drawablegenerator.util.Icon
@@ -128,83 +131,110 @@ fun RemixIconSingleView(svgFile: File) {
     var xmlSizeText by remember { mutableStateOf("24") }
     var pngSizeText by remember { mutableStateOf("200") }
 
+    var selectColor by remember { mutableStateOf(Color.Black) }
+    var isShowColorPicker by remember { mutableStateOf(false) }
+
     if (isDialogOpen) {
         AlertDialog(
             //点击外层空白处关闭
             onDismissRequest = { isDialogOpen = false }
         ) {
-            Column(modifier = Modifier.background(Color.White, RoundedCornerShape(24.dp)).padding(24.dp)) {
-                Row(verticalAlignment = Alignment.CenterVertically) {
-                    Box(Modifier.border(1.dp, Color.Black).padding(8.dp)) {
-                        Image(
-                            loadSvgPainter(svgFile.inputStream(), Density(24f)),
-                            contentDescription = null,
-                            modifier = Modifier.width(24.dp).height(24.dp)
-                        )
+            Box {
+
+                Column(modifier = Modifier.background(Color.White, RoundedCornerShape(24.dp)).padding(24.dp)) {
+                    Row(verticalAlignment = Alignment.CenterVertically) {
+                        Box(Modifier.border(1.dp, Color.Black).padding(8.dp)) {
+                            Image(
+                                loadSvgPainter(svgFile.inputStream(), Density(24f)),
+                                contentDescription = null,
+                                modifier = Modifier.width(24.dp).height(24.dp)
+                            )
+                        }
+
+                        Text(svgFile.nameWithoutExtension)
+                        IconButton(onClick = {
+                            CommonUtil.copyText(svgFile.nameWithoutExtension)
+                            ComposeToast.show("复制图标名成功!")
+                            isDialogOpen = false
+                        }) {
+                            Icon(
+                                painter = painterResource("file-copy-fill.svg"),
+                                contentDescription = "Favorite Icon",
+                                tint = Color.Gray,
+                                modifier = Modifier.size(24.dp)
+                            )
+                        }
                     }
 
-                    Text(svgFile.nameWithoutExtension)
-                    IconButton(onClick = {}) {
-                        Icon(
-                            imageVector = Icons.Default.Favorite,
-                            contentDescription = "Favorite Icon",
-                            tint = Color.Red,
-                            modifier = Modifier.size(24.dp)
-                        )
+                    Spacer(Modifier.height(8.dp))
+
+                    Row(verticalAlignment = Alignment.CenterVertically) {
+                        OutlinedTextField(
+                            xmlSizeText,
+                            onValueChange = { xmlSizeText = it },
+                            label = { Text("输出XML文件的宽高(单位dp)") })
+                        Spacer(Modifier.width(16.dp))
+
+                        Button(onClick = {
+                            isDialogOpen = false
+
+                            val outputFile = CommonUtil.svgToXml(svgFile, xmlSizeText.toInt())
+                            CommonUtil.copyFile(outputFile)
+
+                            ComposeToast.show("导出xml文件成功,已复制文件到剪切板,可以直接粘贴!")
+
+                        }) {
+                            Icon(
+                                imageVector = Icons.Default.KeyboardArrowDown,
+                                contentDescription = "Favorite Icon",
+                                tint = Color.Red,
+                                modifier = Modifier.size(24.dp)
+                            )
+                            Text("XML")
+                        }
+                    }
+
+                    Spacer(Modifier.height(8.dp))
+
+                    Row(verticalAlignment = Alignment.CenterVertically) {
+                        //选择颜色
+                        Box(Modifier.size(50.dp, 50.dp).background(selectColor).onClick {
+                            isShowColorPicker = true
+                        }) {
+
+                        }
+
+                        OutlinedTextField(
+                            pngSizeText,
+                            onValueChange = { pngSizeText = it },
+                            label = { Text("输出PNG文件的宽高(单位px)") })
+                        Spacer(Modifier.width(16.dp))
+
+
+                        Button(onClick = {
+                            val outputFile = CommonUtil.svgToPng(svgFile, Color.White, pngSizeText.toInt())
+                            CommonUtil.copyFile(outputFile)
+                            ComposeToast.show("导出png文件成功,已复制文件到剪切板,可以直接粘贴!")
+                            isDialogOpen = false
+                        }) {
+                            Icon(
+                                imageVector = Icons.Default.KeyboardArrowDown,
+                                contentDescription = "Favorite Icon",
+                                tint = Color.Red,
+                                modifier = Modifier.size(24.dp)
+                            )
+                            Text("PNG")
+                        }
                     }
                 }
 
-                Spacer(Modifier.height(8.dp))
-
-                Row(verticalAlignment = Alignment.CenterVertically) {
-                    OutlinedTextField(
-                        xmlSizeText,
-                        onValueChange = { xmlSizeText = it },
-                        label = { Text("输出XML文件的宽高(单位dp)") })
-                    Spacer(Modifier.width(16.dp))
-                    Button(onClick = {
-                        isDialogOpen = false
-
-                        val outputFile = CommonUtil.svgToXml(svgFile, xmlSizeText.toInt())
-                        CommonUtil.copyFile(outputFile)
-
-                        ComposeToast.show("导出xml文件成功,已复制文件到剪切板,可以直接粘贴!")
-
-                    }) {
-                        Icon(
-                            imageVector = Icons.Default.KeyboardArrowDown,
-                            contentDescription = "Favorite Icon",
-                            tint = Color.Red,
-                            modifier = Modifier.size(24.dp)
-                        )
-                        Text("XML")
-                    }
-                }
-
-                Spacer(Modifier.height(8.dp))
-
-                Row(verticalAlignment = Alignment.CenterVertically) {
-                    OutlinedTextField(
-                        pngSizeText,
-                        onValueChange = { pngSizeText = it },
-                        label = { Text("输出PNG文件的宽高(单位px)") })
-                    Spacer(Modifier.width(16.dp))
-                    Button(onClick = {
-                        val outputFile = CommonUtil.svgToPng(svgFile, Color.White, pngSizeText.toInt())
-                        CommonUtil.copyFile(outputFile)
-                        ComposeToast.show("导出png文件成功,已复制文件到剪切板,可以直接粘贴!")
-                        isDialogOpen = false
-                    }) {
-                        Icon(
-                            imageVector = Icons.Default.KeyboardArrowDown,
-                            contentDescription = "Favorite Icon",
-                            tint = Color.Red,
-                            modifier = Modifier.size(24.dp)
-                        )
-                        Text("PNG")
-                    }
+                if (isShowColorPicker) {
+                    ColorPicker(selectColor, onColorChanged = {
+                        selectColor = it
+                    }, onConfirm = { isShowColorPicker = it })
                 }
             }
+
         }
     }
 
