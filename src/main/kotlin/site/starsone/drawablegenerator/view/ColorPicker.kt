@@ -56,10 +56,6 @@ fun ColorPicker(color: Color, onColorChanged: (Color) -> Unit,onConfirm:(Boolean
 
             }, placeholder = {Text("十六进制颜色代码(RGBA)")})
         }
-
-        Button(onClick = {onConfirm.invoke(false)}){
-            Text("确定")
-        }
     }
 
 }

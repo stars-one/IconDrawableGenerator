@@ -5,6 +5,7 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.CursorDropdownMenu
 import androidx.compose.material.Icon
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.KeyboardArrowDown
@@ -142,7 +143,7 @@ fun RemixIconSingleView(svgFile: File) {
 
                 Column(modifier = Modifier.background(Color.White, RoundedCornerShape(24.dp)).padding(24.dp)) {
                     Row(verticalAlignment = Alignment.CenterVertically) {
-                        Box(Modifier.border(1.dp, Color.Black).padding(8.dp)) {
+                        Box(Modifier.border(1.dp, Color(0xFFe1e6f0)).padding(8.dp)) {
                             Image(
                                 loadSvgPainter(svgFile.inputStream(), Density(24f)),
                                 contentDescription = null,
@@ -150,7 +151,10 @@ fun RemixIconSingleView(svgFile: File) {
                             )
                         }
 
+                        Spacer(Modifier.width(8.dp))
+
                         Text(svgFile.nameWithoutExtension)
+
                         IconButton(onClick = {
                             CommonUtil.copyText(svgFile.nameWithoutExtension)
                             ComposeToast.show("复制图标名成功!")
@@ -159,7 +163,7 @@ fun RemixIconSingleView(svgFile: File) {
                             Icon(
                                 painter = painterResource("file-copy-fill.svg"),
                                 contentDescription = "Favorite Icon",
-                                tint = Color.Gray,
+                                tint = Color(0xff1d5ef5),
                                 modifier = Modifier.size(24.dp)
                             )
                         }
@@ -184,24 +188,28 @@ fun RemixIconSingleView(svgFile: File) {
 
                         }) {
                             Icon(
-                                imageVector = Icons.Default.KeyboardArrowDown,
+                                painter = painterResource("arrow-down-fill.svg"),
                                 contentDescription = "Favorite Icon",
-                                tint = Color.Red,
+                                tint = Color.White,
                                 modifier = Modifier.size(24.dp)
                             )
-                            Text("XML")
+                            Text("XML下载")
                         }
                     }
 
                     Spacer(Modifier.height(8.dp))
 
+
                     Row(verticalAlignment = Alignment.CenterVertically) {
+
                         //选择颜色
                         Box(Modifier.size(50.dp, 50.dp).background(selectColor).onClick {
                             isShowColorPicker = true
                         }) {
 
                         }
+
+                        Spacer(Modifier.width(8.dp))
 
                         OutlinedTextField(
                             pngSizeText,
@@ -217,17 +225,17 @@ fun RemixIconSingleView(svgFile: File) {
                             isDialogOpen = false
                         }) {
                             Icon(
-                                imageVector = Icons.Default.KeyboardArrowDown,
+                                painter = painterResource("arrow-down-fill.svg"),
                                 contentDescription = "Favorite Icon",
-                                tint = Color.Red,
+                                tint = Color.White,
                                 modifier = Modifier.size(24.dp)
                             )
-                            Text("PNG")
+                            Text("下载PNG")
                         }
                     }
                 }
 
-                if (isShowColorPicker) {
+                CursorDropdownMenu(isShowColorPicker, onDismissRequest = {isShowColorPicker = false}){
                     ColorPicker(selectColor, onColorChanged = {
                         selectColor = it
                     }, onConfirm = { isShowColorPicker = it })
