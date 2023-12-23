@@ -178,7 +178,7 @@ fun RemixIconSingleView(svgFile: File) {
                             isDialogOpen = false
 
                             val outputFile = CommonUtil.svgToXml(svgFile, xmlSizeText.toInt())
-                            CommonUtil.copyFile(outputFile)
+                            CommonUtil.copyFiles(outputFile)
 
                             ComposeToast.show("导出xml文件成功,已复制文件到剪切板,可以直接粘贴!")
 
@@ -212,7 +212,7 @@ fun RemixIconSingleView(svgFile: File) {
 
                         Button(onClick = {
                             val outputFile = CommonUtil.svgToPng(svgFile, Color.White, pngSizeText.toInt())
-                            CommonUtil.copyFile(outputFile)
+                            CommonUtil.copyFiles(outputFile)
                             ComposeToast.show("导出png文件成功,已复制文件到剪切板,可以直接粘贴!")
                             isDialogOpen = false
                         }) {
