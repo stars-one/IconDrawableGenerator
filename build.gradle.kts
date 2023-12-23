@@ -51,9 +51,9 @@ dependencies {
 
 val descJson = """
     {
-      "appName": "Android",
+      "appName": "Android图标生成器",
       "desc":"用于生成android开发可用的xml矢量图标文件",
-      "version": "1.0.1",
+      "version": "1.0.2",
       "versionCode":1,
       "icon":"img/icon.png",
       "author": "stars-one",
