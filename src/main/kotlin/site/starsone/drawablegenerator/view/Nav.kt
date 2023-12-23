@@ -1,4 +1,4 @@
-package site.starsone.drawablegenerator
+package site.starsone.drawablegenerator.view
 
 
 import androidx.compose.foundation.background

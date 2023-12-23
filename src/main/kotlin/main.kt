@@ -5,7 +5,7 @@ import androidx.compose.ui.window.Window
 import androidx.compose.ui.window.WindowPosition
 import androidx.compose.ui.window.application
 import androidx.compose.ui.window.rememberWindowState
-import site.starsone.drawablegenerator.App
+import site.starsone.drawablegenerator.page.App
 
 
 fun main() = application {
