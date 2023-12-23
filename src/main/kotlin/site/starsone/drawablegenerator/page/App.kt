@@ -9,7 +9,7 @@ import site.starsone.drawablegenerator.toast.ComposeToastContainer
 
 @Composable
 fun App() {
-    var selectIndex by remember { mutableStateOf(1) }
+    var selectIndex by remember { mutableStateOf(0) }
 
     MaterialTheme() {
         ComposeToastContainer  {
