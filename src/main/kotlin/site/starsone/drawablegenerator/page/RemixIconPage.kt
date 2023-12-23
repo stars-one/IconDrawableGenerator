@@ -1,4 +1,4 @@
-package site.starsone.drawablegenerator
+package site.starsone.drawablegenerator.page
 
 import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
@@ -7,7 +7,6 @@ import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Icon
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.filled.KeyboardArrowDown
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
@@ -22,12 +21,12 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.Density
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.godaddy.android.colorpicker.ClassicColorPicker
-import com.godaddy.android.colorpicker.HsvColor
+import site.starsone.drawablegenerator.view.ColorPicker
 import site.starsone.drawablegenerator.toast.ComposeToast
 import site.starsone.drawablegenerator.util.CommonUtil
 import site.starsone.drawablegenerator.util.Icon
 import site.starsone.drawablegenerator.util.RemixIconDataUtil
+import site.starsone.drawablegenerator.view.MyCard
 import java.io.File
 
 
