@@ -3,6 +3,7 @@ package site.starsone.drawablegenerator.util
 import androidx.compose.ui.graphics.toArgb
 import com.google.gson.Gson
 import com.google.gson.internal.`$Gson$Types`
+import site.starsone.drawablegenerator.CacheUtil
 import site.starsone.svg2vector.SvgUtils
 import java.awt.Color
 import java.awt.Toolkit
@@ -23,7 +24,7 @@ object CommonUtil {
     /**
      * 复制单个文件
      */
-    fun copyFile(file: File) {
+    fun copyFiles(file: File) {
         // 创建剪切板内容
         val systemClipboard = Toolkit.getDefaultToolkit().systemClipboard
         systemClipboard.setContents(FileTransferable(listOf(file)), null)
@@ -33,7 +34,7 @@ object CommonUtil {
     /**
      * 复制多个文件
      */
-    fun copyFile(files: List<File>) {
+    fun copyFiles(files: List<File>) {
         // 创建剪切板内容
         val systemClipboard = Toolkit.getDefaultToolkit().systemClipboard
         systemClipboard.setContents(FileTransferable(files), null)
@@ -82,12 +83,18 @@ object CommonUtil {
     }
 
     fun svgToXml(svgFile:File,size:Int): File {
-        val outputFile = File(svgFile.parentFile,"cache/${svgFile.nameWithoutExtension.replace("-","_")}.xml").apply {
+        val outputFile = File(CacheUtil.cacheDir,"${svgFile.nameWithoutExtension.replace("-","_")}.xml")
+        SvgUtils.toXmlFile(svgFile,outputFile,size)
+        return outputFile
+    }
+
+    fun svgToXml(svgStr:String,size:Int): File {
+        val outputFile = File(CacheUtil.cacheDir,"output.xml").apply {
             if (parentFile.exists().not()) {
                 parentFile.mkdirs()
             }
         }
-        SvgUtils.toXmlFile(svgFile,outputFile,size)
+        SvgUtils.toXmlFile(svgStr,outputFile,size)
         return outputFile
     }
 }

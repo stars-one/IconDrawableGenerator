@@ -39,7 +39,7 @@ dependencies {
     implementation ("org.dom4j:dom4j:2.1.1")
     implementation ("gov.nist.math:jama:1.0.3")
 
-    implementation ("com.github.stars-one:svg2vector:1.1")
+    implementation ("com.github.stars-one:svg2vector:1.2")
 
     //颜色选择 https://github.com/godaddy/compose-color-picker
     //implementation ("com.godaddy.android.colorpicker:compose-color-picker:0.7.0")
