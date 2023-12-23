@@ -12,13 +12,14 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun LeftMenuNav(onItemSelect:(Int)->Unit) {
-    val items = listOf(Icons.Default.Favorite,Icons.Default.Face)
+    val items = listOf("remixicon-fill.svg","hammer-fill.svg")
     val labels = listOf("RemixIcon图标库","SVG转Drawable")
 
     val selectedItem = remember { mutableStateOf(items[0]) }
@@ -28,7 +29,7 @@ fun LeftMenuNav(onItemSelect:(Int)->Unit) {
         Spacer(Modifier.height(12.dp))
         items.forEachIndexed{index,item ->
             NavigationDrawerItem(
-                icon = { Icon(item, contentDescription = null) },
+                icon = { Icon(painterResource(item), contentDescription = null, modifier = Modifier.size(24.dp)) },
                 label = { Text(labels[index]) },
                 selected = item == selectedItem.value,
                 onClick = {
