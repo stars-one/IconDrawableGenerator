@@ -18,7 +18,7 @@ import kotlinx.coroutines.launch
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun LeftMenuNav(onItemSelect:(Int)->Unit) {
-    val items = listOf(Icons.Default.Favorite,Icons.Default.Favorite)
+    val items = listOf(Icons.Default.Favorite,Icons.Default.Face)
     val labels = listOf("RemixIcon图标库","SVG转Drawable")
 
     val selectedItem = remember { mutableStateOf(items[0]) }
