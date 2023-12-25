@@ -53,7 +53,7 @@ val descJson = """
     {
       "appName": "Android图标生成器",
       "desc":"用于生成android开发可用的xml矢量图标文件",
-      "version": "1.0.2",
+      "version": "1.0.3",
       "versionCode":1,
       "icon":"img/icon.png",
       "author": "stars-one",
