@@ -17,6 +17,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.pointer.PointerEventType
 import androidx.compose.ui.input.pointer.onPointerEvent
+import androidx.compose.ui.layout.onSizeChanged
 import androidx.compose.ui.res.loadSvgPainter
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.Density
@@ -35,6 +36,7 @@ import java.io.File
 @Composable
 fun RemixIconPage() {
 
+    var widthDp by remember { mutableStateOf(200.dp) }
 
     val list = RemixIconDataUtil.initResource()
 
@@ -46,11 +48,16 @@ fun RemixIconPage() {
         LazyColumn(
             modifier = Modifier
                 .fillMaxSize()
+                .onSizeChanged { size ->
+                    // 获取组件的宽度
+                    widthDp = size.width.dp
+                }
                 .padding(16.dp),
             verticalArrangement = Arrangement.spacedBy(16.dp),
             //注意这里
             state = state
         ) {
+
 
             items(list.size) {
                 val item = list[it]
@@ -59,7 +66,10 @@ fun RemixIconPage() {
 
                     val iconList = item.data
 
-                    val spanCount = 10
+                    //计算每行多少个(每个item宽度为120),动态变化
+
+                    val spanCount = widthDp.div(120).value.toInt()
+
                     val size = iconList.size
                     val rows = (size / spanCount) + 1
 
@@ -235,7 +245,7 @@ fun RemixIconSingleView(svgFile: File) {
                     }
                 }
 
-                CursorDropdownMenu(isShowColorPicker, onDismissRequest = {isShowColorPicker = false}){
+                CursorDropdownMenu(isShowColorPicker, onDismissRequest = { isShowColorPicker = false }) {
                     ColorPicker(selectColor, onColorChanged = {
                         selectColor = it
                     }, onConfirm = { isShowColorPicker = it })

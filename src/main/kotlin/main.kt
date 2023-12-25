@@ -16,7 +16,7 @@ fun main() = application {
         //应用名称
         title = "Android图标生成器",
         //设置宽高和居中
-        state = rememberWindowState(size = DpSize(1680.dp, 800.dp), position = WindowPosition(Alignment.Center))
+        state = rememberWindowState(size = DpSize(1200.dp, 800.dp), position = WindowPosition(Alignment.Center))
     ) {
         App()
     }
