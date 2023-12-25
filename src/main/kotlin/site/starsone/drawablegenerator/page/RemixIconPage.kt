@@ -8,7 +8,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.CursorDropdownMenu
 import androidx.compose.material.Icon
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.KeyboardArrowDown
+import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -27,6 +27,7 @@ import site.starsone.drawablegenerator.view.ColorPicker
 import site.starsone.drawablegenerator.toast.ComposeToast
 import site.starsone.drawablegenerator.util.CommonUtil
 import site.starsone.drawablegenerator.util.Icon
+import site.starsone.drawablegenerator.util.IconGroup
 import site.starsone.drawablegenerator.util.RemixIconDataUtil
 import site.starsone.drawablegenerator.view.MyCard
 import java.io.File
@@ -38,63 +39,90 @@ fun RemixIconPage() {
 
     var widthDp by remember { mutableStateOf(200.dp) }
 
-    val list = RemixIconDataUtil.initResource()
+    val allListData = RemixIconDataUtil.initResource()
 
+    var list by remember { mutableStateOf(allListData) }
 
-    Box(Modifier.fillMaxSize()) {
+    var keyWord by remember { mutableStateOf("") }
 
-        val state = rememberLazyListState()
+    Column(Modifier.fillMaxSize()) {
 
-        LazyColumn(
-            modifier = Modifier
-                .fillMaxSize()
-                .onSizeChanged { size ->
-                    // 获取组件的宽度
-                    widthDp = size.width.dp
+        Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.Center) {
+
+            OutlinedTextField(keyWord, onValueChange = {
+                keyWord = it
+                list = if (keyWord.isNotBlank()) {
+                    val newList = allListData.map {
+                        val newIconList = it.data
+                        it.copy(data = newIconList.filter { it.keyword.any { it.contains(keyWord) } })
+                    }
+                    newList
+                } else {
+                    allListData
                 }
-                .padding(16.dp),
-            verticalArrangement = Arrangement.spacedBy(16.dp),
-            //注意这里
-            state = state
-        ) {
+            }, placeholder = {Text("输入关键字搜索")}, leadingIcon = { Icon(Icons.Default.Search,"") })
+        }
 
 
-            items(list.size) {
-                val item = list[it]
-                MyCard(item.groupName + "( ${item.data.size}个)") {
-                    Spacer(Modifier.height(16.dp))
+        Box(Modifier.fillMaxSize()) {
 
-                    val iconList = item.data
+            val state = rememberLazyListState()
 
-                    //计算每行多少个(每个item宽度为120),动态变化
+            LazyColumn(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .onSizeChanged { size ->
+                        // 获取组件的宽度
+                        widthDp = size.width.dp
+                    }
+                    .padding(16.dp),
+                verticalArrangement = Arrangement.spacedBy(16.dp),
+                //注意这里
+                state = state
+            ) {
 
-                    val spanCount = widthDp.div(120).value.toInt()
 
-                    val size = iconList.size
-                    val rows = (size / spanCount) + 1
+                items(list.size) {
+                    val item = list[it]
+                    if (item.data.isNotEmpty()) {//数据不为空才展示
 
-                    for (i in 0 until rows) {
-                        val start = i * spanCount
-                        var end = (i + 1) * spanCount
-                        if (end > size) {
-                            end = size
+                        MyCard(item.groupName + "( ${item.data.size}个)") {
+                            Spacer(Modifier.height(16.dp))
+
+                            val iconList = item.data
+
+                            //计算每行多少个(每个item宽度为120),动态变化
+
+                            val spanCount = widthDp.div(120).value.toInt()
+
+                            val size = iconList.size
+                            val rows = (size / spanCount) + 1
+
+                            for (i in 0 until rows) {
+                                val start = i * spanCount
+                                var end = (i + 1) * spanCount
+                                if (end > size) {
+                                    end = size
+                                }
+
+                                val rowData = iconList.subList(start, end)
+                                RemixIconItemViewRow(rowData)
+                            }
                         }
-
-                        val rowData = iconList.subList(start, end)
-                        RemixIconItemViewRow(rowData)
                     }
                 }
             }
-        }
 
-        //右侧的滚动条
-        VerticalScrollbar(
-            modifier = Modifier.align(Alignment.CenterEnd).fillMaxHeight(),
-            adapter = rememberScrollbarAdapter(
-                scrollState = state
+            //右侧的滚动条
+            VerticalScrollbar(
+                modifier = Modifier.align(Alignment.CenterEnd).fillMaxHeight(),
+                adapter = rememberScrollbarAdapter(
+                    scrollState = state
+                )
             )
-        )
+        }
     }
+
 
 }
 
