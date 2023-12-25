@@ -12,6 +12,7 @@ import java.awt.datatransfer.StringSelection
 import java.awt.datatransfer.Transferable
 import java.awt.datatransfer.UnsupportedFlavorException
 import java.io.File
+import java.text.DecimalFormat
 
 object CommonUtil {
 
@@ -116,6 +117,23 @@ class FileTransferable(private val fileList: List<File>) : Transferable {
         } else {
             throw UnsupportedFlavorException(flavor)
         }
+    }
+}
+
+/**
+ * 将字节(B)转为对应的单位
+ */
+fun Long.toUnitString(): String {
+    val df = DecimalFormat("#.00")
+    val bytes = this
+    if (bytes == 0L) {
+        return "0.00B"
+    }
+    return when {
+        bytes < 1024 -> return df.format(bytes.toDouble()) + "B"
+        bytes < 1048576 -> df.format(bytes.toDouble() / 1024) + "K"
+        bytes < 1073741824 -> df.format(bytes.toDouble() / 1048576) + "Mb"
+        else -> df.format(bytes.toDouble() / 1073741824) + "Gb"
     }
 }
 

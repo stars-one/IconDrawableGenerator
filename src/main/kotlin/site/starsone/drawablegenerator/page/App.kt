@@ -21,6 +21,7 @@ fun App() {
                     when (selectIndex) {
                         0 -> RemixIconPage()
                         1 -> SvgToDrawablePage()
+                        2 -> SettingPage()
                     }
                 }
 
