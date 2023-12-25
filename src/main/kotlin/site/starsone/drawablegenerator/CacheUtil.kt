@@ -1,6 +1,7 @@
 package site.starsone.drawablegenerator
 
 import site.starsone.drawablegenerator.util.RemixIconDataUtil
+import site.starsone.drawablegenerator.util.toUnitString
 import java.io.File
 
 object CacheUtil {
@@ -29,15 +30,14 @@ object CacheUtil {
      * 清除缓存
      */
     fun cleanCache() {
-
+        cacheDir.deleteRecursively()
     }
 
     /**
      * 计算缓存总大小
      */
     fun getCacheSize(): String {
-
-        return ""
+        return cacheDir.length().toUnitString()
     }
 
 
