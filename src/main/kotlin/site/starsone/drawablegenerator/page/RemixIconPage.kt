@@ -238,17 +238,18 @@ fun RemixIconSingleView(svgFile: File) {
                     Spacer(Modifier.height(8.dp))
 
 
-                    Row(verticalAlignment = Alignment.CenterVertically) {
+                    Row (verticalAlignment = Alignment.CenterVertically) {
 
+                        Text("png背景色")
+                        Spacer(Modifier.width(8.dp))
                         //选择颜色
-                        Box(Modifier.size(50.dp, 50.dp).background(selectColor).onClick {
+                        Box(Modifier.size(20.dp, 20.dp).background(selectColor).onClick {
                             isShowColorPicker = true
                         }) {
 
                         }
 
                         Spacer(Modifier.width(8.dp))
-
                         OutlinedTextField(
                             pngSizeText,
                             onValueChange = { pngSizeText = it },
