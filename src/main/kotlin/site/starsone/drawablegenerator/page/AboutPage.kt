@@ -14,6 +14,7 @@ import androidx.compose.ui.input.pointer.pointerHoverIcon
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import java.awt.Desktop
 import java.net.URI
 
@@ -35,6 +36,21 @@ fun AboutPage() {
             InfoText("软件开源地址", versionInfo.githubUrl,true)
         }
 
+        Text("开发不易,希望得到你的打赏支持", fontWeight = FontWeight.Bold, fontSize = 16.sp)
+
+        Row(horizontalArrangement = Arrangement.Center) {
+            Column(horizontalAlignment = Alignment.CenterHorizontally) {
+                Image(painter = painterResource("zhifubao.jpg"), null, modifier = Modifier.size(200.dp))
+                Text("支付宝")
+            }
+
+            Spacer(Modifier.width(16.dp))
+            Column(horizontalAlignment = Alignment.CenterHorizontally) {
+                Image(painter = painterResource("weixin.jpg"), null, modifier = Modifier.size(200.dp))
+                Text("微信")
+
+            }
+        }
     }
 }
 
