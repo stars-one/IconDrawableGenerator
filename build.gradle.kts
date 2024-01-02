@@ -96,9 +96,18 @@ compose.desktop {
                 shortcut = true //开启快捷方式
                 menuGroup = "start-menu-group" //将程序加入window菜单组
                 dirChooser = true
+                iconFile.set(project.file("resources/common/logo.ico"))
+            }
+
+            linux{
+                iconFile.set(project.file("resources/common/logo.png"))
+            }
+            macOS{
+                iconFile.set(project.file("resources/common/logo.icns"))
             }
 
             appResourcesRootDir.set(project.layout.projectDirectory.dir("resources"))
+
         }
     }
 }
