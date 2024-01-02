@@ -1,3 +1,4 @@
+import AppInfoUtil.versionInfo
 import androidx.compose.runtime.compositionLocalOf
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.awt.ComposeWindow
@@ -11,13 +12,12 @@ import androidx.compose.ui.window.rememberWindowState
 import com.google.gson.Gson
 import site.starsone.drawablegenerator.model.VersionInfo
 import site.starsone.drawablegenerator.page.App
+import java.io.File
 
 
 fun main() = application {
-    //读取版本信息
-    val json = this::class.java.getResource("/desc.json")?.readText()
-    val versionInfo = Gson().fromJson(json, VersionInfo::class.java)
 
+    val versionInfo = AppInfoUtil.versionInfo
     Window(
         icon = painterResource("logo.png"),
         onCloseRequest = ::exitApplication,
@@ -27,5 +27,13 @@ fun main() = application {
         state = rememberWindowState(size = DpSize(1200.dp, 800.dp), position = WindowPosition(Alignment.Center))
     ) {
         App()
+    }
+}
+
+object AppInfoUtil{
+    val versionInfo by lazy {
+        //读取版本信息
+        val json = this::class.java.getResource("/desc.json")?.readText()
+        Gson().fromJson(json, VersionInfo::class.java)
     }
 }

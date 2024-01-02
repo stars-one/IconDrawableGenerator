@@ -22,6 +22,7 @@ fun App() {
                         0 -> RemixIconPage()
                         1 -> SvgToDrawablePage()
                         2 -> SettingPage()
+                        3 -> AboutPage()
                     }
                 }
 
