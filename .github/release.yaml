@@ -1,0 +1,136 @@
+name: Build Release Binaries
+
+on:
+  push:
+    tags:
+      - '*'
+
+jobs:
+  create-linux-package:
+    runs-on: ubuntu-latest
+    name: Create Deb Package
+    steps:
+      # Setup Java environment for the next steps
+      - name: Setup Java
+        uses: actions/setup-java@v2
+        with:
+          distribution: 'zulu'
+          java-version: 18
+
+      # Check out current repository
+      - name: Fetch Sources
+        uses: actions/checkout@v2.3.1
+
+      # 设置环境变量版本号(RELEASE_VERSION)
+      - name: Set Release version env variable
+        run: |
+          echo "RELEASE_VERSION=$(mvn help:evaluate -Dexpression=project.version -q -DforceStdout)" >> $GITHUB_ENV
+
+      # Build Desktop Uber Jar application
+      - name: Desktop Uber Jar
+        run: ./gradlew :desktop:packageUberJarForCurrentOS
+
+      # Build Desktop Packaged application
+      - name: Desktop App Package
+        run: ./gradlew :desktop:packageDeb
+
+      # Create a Draft Release
+      - name: Automatic Releases
+        uses: marvinpinto/action-automatic-releases@latest
+        with:
+          # GitHub secret token
+          repo_token: "${{ secrets.GITHUB_TOKEN }}"
+          automatic_release_tag: "${{ env.RELEASE_VERSION }}"
+          prerelease: false
+          draft: true
+          title: "Release ${{ env.RELEASE_VERSION }}"
+          # Assets to upload to the release
+          files: |
+            desktop/build/compose/jars/*.jar
+            desktop/build/compose/binaries/main/*/*
+
+  # Windows Package
+  create-win-package:
+    runs-on: windows-latest
+    name: Create Windows Package
+    steps:
+      # Setup Java environment for the next steps
+      - name: Setup Java
+        uses: actions/setup-java@v2
+        with:
+          distribution: 'zulu'
+          java-version: 18
+
+      # Check out current repository
+      - name: Fetch Sources
+        uses: actions/checkout@v2.3.1
+
+      # 设置环境变量版本号(RELEASE_VERSION)
+      - name: Set Release version env variable
+        run: |
+          echo "RELEASE_VERSION=$(mvn help:evaluate -Dexpression=project.version -q -DforceStdout)" >> $GITHUB_ENV
+
+      # Build Desktop Uber Jar application
+      - name: Desktop Uber Jar
+        run: ./gradlew :desktop:packageUberJarForCurrentOS
+
+      # Build Desktop Packaged application
+      - name: Desktop App Package
+        run: ./gradlew :desktop:packageMsi
+
+      # Create a Draft Release
+      - name: Automatic Releases
+        uses: marvinpinto/action-automatic-releases@latest
+        with:
+          # GitHub secret token
+          repo_token: "${{ secrets.GITHUB_TOKEN }}"
+          automatic_release_tag: "${{ env.RELEASE_VERSION }}"
+          prerelease: false
+          draft: true
+          title: "Release ${{ env.RELEASE_VERSION }}"
+          # Assets to upload to the release
+          files: |
+            desktop/build/compose/binaries/main/*/*
+
+
+  create-mac-package:
+    runs-on: macos-latest
+    name: Create Mac Package
+    steps:
+      # Setup Java environment for the next steps
+      - name: Setup Java
+        uses: actions/setup-java@v2
+        with:
+          distribution: 'zulu'
+          java-version: 18
+
+      # Check out current repository
+      - name: Fetch Sources
+        uses: actions/checkout@v2.3.1
+
+      # 设置环境变量版本号(RELEASE_VERSION)
+      - name: Set Release version env variable
+        run: |
+          echo "RELEASE_VERSION=$(mvn help:evaluate -Dexpression=project.version -q -DforceStdout)" >> $GITHUB_ENV
+
+      # Build Desktop Uber Jar application
+      - name: Desktop Uber Jar
+        run: ./gradlew :desktop:packageUberJarForCurrentOS
+
+      # Build Desktop Packaged application
+      - name: Desktop App Package
+        run: ./gradlew :desktop:packageDmg
+
+      # Create a Draft Release
+      - name: Automatic Releases
+        uses: marvinpinto/action-automatic-releases@latest
+        with:
+          # GitHub secret token
+          repo_token: "${{ secrets.GITHUB_TOKEN }}"
+          automatic_release_tag: "${{ env.RELEASE_VERSION }}"
+          prerelease: false
+          draft: true
+          title: "Release ${{ env.RELEASE_VERSION }}"
+          # Assets to upload to the release
+          files: |
+            desktop/build/compose/binaries/main/*/*
