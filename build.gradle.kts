@@ -71,7 +71,7 @@ compose.desktop {
 
         nativeDistributions {
             targetFormats(TargetFormat.Dmg, TargetFormat.Msi, TargetFormat.Deb)
-            packageName = versionInfo.appName
+            packageName = "IconDrawableGenerator"
             packageVersion = versionInfo.version
 
 
