@@ -32,7 +32,12 @@ jobs:
       # 设置环境变量版本号(RELEASE_VERSION)
       - name: Set Release version env variable
         run: |
-          echo "RELEASE_VERSION=$(mvn help:evaluate -Dexpression=project.version -q -DforceStdout)" >> $GITHUB_ENV
+          git fetch --depth=1 origin +refs/tags/*:refs/tags/*
+          export GIT_TAG=$(git describe --tags $(git rev-parse HEAD))
+          echo "Current Git tag: $GIT_TAG"
+        env:
+          GIT_TAG: %GIT_TAG%
+
 
       # Build Desktop Uber Jar application
       - name: Desktop Uber Jar
@@ -48,7 +53,7 @@ jobs:
         with:
           draft: true
           allowUpdates: true
-          tag: "${{ env.RELEASE_VERSION }}"
+          tag: "${{ env.GIT_TAG }}"
           artifacts: "build/compose/jars/*.jar,build/compose/binaries/main/*/*"
           token: ${{ secrets.GITHUB_TOKEN  }}
 
@@ -73,7 +78,11 @@ jobs:
       # 设置环境变量版本号(RELEASE_VERSION)
       - name: Set Release version env variable
         run: |
-          echo "RELEASE_VERSION=$(mvn help:evaluate -Dexpression=project.version -q -DforceStdout)" >> %GITHUB_ENV%
+          git fetch --depth=1 origin +refs/tags/*:refs/tags/*
+          for /f "delims=" %%i in ('git describe --tags ^| findstr /b /r /c:"v[0-9]*\.[0-9]*\.[0-9]*"') do set GIT_TAG=%%i
+          echo Current Git tag: %GIT_TAG%
+        env:
+          GIT_TAG: %GIT_TAG%
 
       # Build Desktop Uber Jar application
       - name: Desktop Uber Jar
@@ -89,7 +98,7 @@ jobs:
         with:
           draft: true
           allowUpdates: true
-          tag: "${{ env.RELEASE_VERSION }}"
+          tag: "${{ env.GIT_TAG }}"
           artifacts: "build/compose/jars/*.jar,build/compose/binaries/main/*/*"
           token: ${{ secrets.GITHUB_TOKEN  }}
 
@@ -114,7 +123,11 @@ jobs:
       # 设置环境变量版本号(RELEASE_VERSION)
       - name: Set Release version env variable
         run: |
-          echo "RELEASE_VERSION=$(mvn help:evaluate -Dexpression=project.version -q -DforceStdout)" >> $GITHUB_ENV
+          git fetch --depth=1 origin +refs/tags/*:refs/tags/*
+          export GIT_TAG=$(git describe --tags $(git rev-parse HEAD))
+          echo "Current Git tag: $GIT_TAG"
+        env:
+          GIT_TAG: %GIT_TAG%
 
       # Build Desktop Uber Jar application
       - name: Desktop Uber Jar
@@ -130,6 +143,6 @@ jobs:
         with:
           draft: true
           allowUpdates: true
-          tag: "${{ env.RELEASE_VERSION }}"
+          tag: "${{ env.GIT_TAG }}"
           artifacts: "build/compose/jars/*.jar,build/compose/binaries/main/*/*"
           token: ${{ secrets.GITHUB_TOKEN  }}
