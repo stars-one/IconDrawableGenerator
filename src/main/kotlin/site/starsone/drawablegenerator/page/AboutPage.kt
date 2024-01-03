@@ -36,6 +36,7 @@ fun AboutPage() {
             InfoText("软件开源地址", versionInfo.githubUrl,true)
         }
 
+
         Text("开发不易,希望得到你的打赏支持", fontWeight = FontWeight.Bold, fontSize = 16.sp)
 
         Row(horizontalArrangement = Arrangement.Center) {
