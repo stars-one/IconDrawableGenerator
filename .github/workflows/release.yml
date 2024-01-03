@@ -77,10 +77,10 @@ jobs:
       # 设置环境变量版本号(RELEASE_VERSION)
       - name: Set Release version env variable
         run: |
-          git fetch --depth=1 origin +refs/tags/*:refs/tags/*
-          for /f "delims=" %%i in ('git describe --tags ^| findstr /b /r /c:"v[0-9]*\.[0-9]*\.[0-9]*"') do set GIT_TAG=%%i
-          echo Current Git tag: %GIT_TAG%
-          echo "RELEASE_VERSION=%GIT_TAG%" >> %GITHUB_ENV%
+          $gitTags = git tag --sort=-creatordate
+          $latestTag = $gitTags[0]
+          echo "Latest Git tag: $latestTag"
+          echo "RELEASE_VERSION=$latestTag" >> $GITHUB_ENV
 
       # Build Desktop Uber Jar application
       - name: Desktop Uber Jar
