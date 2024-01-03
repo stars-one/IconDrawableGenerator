@@ -8,6 +8,8 @@ on:
 jobs:
   create-linux-package:
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
     name: Create Deb Package
     steps:
       # Setup Java environment for the next steps
@@ -47,6 +49,8 @@ jobs:
   # Windows Package
   create-win-package:
     runs-on: windows-latest
+    permissions:
+      contents: write
     name: Create Windows Package
     steps:
       # Setup Java environment for the next steps
@@ -86,6 +90,8 @@ jobs:
 
   create-mac-package:
     runs-on: macos-latest
+    permissions:
+      contents: write
     name: Create Mac Package
     steps:
       # Setup Java environment for the next steps
