@@ -43,7 +43,7 @@ jobs:
           draft: true
           allowUpdates: true
           tag: "${{ github.ref_name }}"
-          artifacts: "**/*.jar,**/*.deb"
+          artifacts: "${{ github.workspace }}/build/compose/jars/*.jar,${{ github.workspace }}/build/compose/binaries/main/deb/*.deb"
           token: ${{ secrets.GITHUB_TOKEN  }}
 
   # Windows Package
@@ -67,6 +67,7 @@ jobs:
       # 设置工作目录
       - name: Set working directory
         run: |
+          echo '${{ github.workspace }}'
           cd ${{ github.workspace }}
           
 
@@ -85,7 +86,7 @@ jobs:
           draft: true
           allowUpdates: true
           tag: "${{ github.ref_name }}"
-          artifacts: "**/*.jar,**/*.msi"
+          artifacts: "${{ github.workspace }}/build/compose/jars/*.jar,${{ github.workspace }}/build/compose/binaries/main/msi/*.msi"
           token: ${{ secrets.GITHUB_TOKEN  }}
 
 
@@ -121,5 +122,5 @@ jobs:
           draft: true
           allowUpdates: true
           tag: "${{ github.ref_name }}"
-          artifacts: "**/*.jar,**/*.dmg"
+          artifacts: "${{ github.workspace }}/build/compose/jars/*.jar,${{ github.workspace }}/build/compose/binaries/main/dmg/*.dmg"
           token: ${{ secrets.GITHUB_TOKEN  }}
