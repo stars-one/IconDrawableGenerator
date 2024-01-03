@@ -52,7 +52,7 @@ jobs:
         with:
           draft: true
           allowUpdates: true
-          tag: "${{ env.RELEASE_VERSION }}"
+          tag: "${{ github.ref_name }}"
           artifacts: "build/compose/jars/*.jar,build/compose/binaries/main/*/*"
           token: ${{ secrets.GITHUB_TOKEN  }}
 
@@ -96,7 +96,7 @@ jobs:
         with:
           draft: true
           allowUpdates: true
-          tag: "${{ env.RELEASE_VERSION }}"
+          tag: "${{ github.ref_name }}"
           artifacts: "build/compose/jars/*.jar,build/compose/binaries/main/*/*"
           token: ${{ secrets.GITHUB_TOKEN  }}
 
@@ -140,6 +140,6 @@ jobs:
         with:
           draft: true
           allowUpdates: true
-          tag: "${{ env.RELEASE_VERSION }}"
+          tag: "${{ github.ref_name }}"
           artifacts: "build/compose/jars/*.jar,build/compose/binaries/main/*/*"
           token: ${{ secrets.GITHUB_TOKEN  }}
