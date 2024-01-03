@@ -30,11 +30,11 @@ jobs:
 
       # Build Desktop Uber Jar application
       - name: Desktop Uber Jar
-        run: ./gradlew :desktop:packageUberJarForCurrentOS
+        run: ./gradlew packageUberJarForCurrentOS
 
       # Build Desktop Packaged application
       - name: Desktop App Package
-        run: ./gradlew :desktop:packageDeb
+        run: ./gradlew packageDeb
 
       # Create a Draft Release
       - name: Draft Release
@@ -43,7 +43,7 @@ jobs:
           draft: true
           allowUpdates: true
           tag: "${{ env.RELEASE_VERSION }}"
-          artifacts: "desktop/build/compose/jars/*.jar,desktop/build/compose/binaries/main/*/*"
+          artifacts: "build/compose/jars/*.jar,build/compose/binaries/main/*/*"
           token: ${{ secrets.GH_TOKEN }}
 
   # Windows Package
@@ -71,11 +71,11 @@ jobs:
 
       # Build Desktop Uber Jar application
       - name: Desktop Uber Jar
-        run: ./gradlew :desktop:packageUberJarForCurrentOS
+        run: ./gradlew packageUberJarForCurrentOS
 
       # Build Desktop Packaged application
       - name: Desktop App Package
-        run: ./gradlew :desktop:packageMsi
+        run: ./gradlew packageMsi
 
       # Create a Draft Release
       - name: Draft Release
@@ -84,7 +84,7 @@ jobs:
           draft: true
           allowUpdates: true
           tag: "${{ env.RELEASE_VERSION }}"
-          artifacts: "desktop/build/compose/jars/*.jar,desktop/build/compose/binaries/main/*/*"
+          artifacts: "build/compose/jars/*.jar,build/compose/binaries/main/*/*"
           token: ${{ secrets.GH_TOKEN }}
 
 
@@ -112,11 +112,11 @@ jobs:
 
       # Build Desktop Uber Jar application
       - name: Desktop Uber Jar
-        run: ./gradlew :desktop:packageUberJarForCurrentOS
+        run: ./gradlew packageUberJarForCurrentOS
 
       # Build Desktop Packaged application
       - name: Desktop App Package
-        run: ./gradlew :desktop:packageDmg
+        run: ./gradlew packageDmg
 
       # Create a Draft Release
       - name: Draft Release
@@ -125,5 +125,5 @@ jobs:
           draft: true
           allowUpdates: true
           tag: "${{ env.RELEASE_VERSION }}"
-          artifacts: "desktop/build/compose/jars/*.jar,desktop/build/compose/binaries/main/*/*"
+          artifacts: "build/compose/jars/*.jar,build/compose/binaries/main/*/*"
           token: ${{ secrets.GH_TOKEN }}
