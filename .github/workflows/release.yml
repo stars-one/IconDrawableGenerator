@@ -14,14 +14,21 @@ jobs:
     steps:
       # Setup Java environment for the next steps
       - name: Setup Java
-        uses: actions/setup-java@v2
+        uses: actions/setup-java@v3
         with:
           distribution: 'zulu'
           java-version: 18
+          cache: gradle
 
       # Check out current repository
       - name: Fetch Sources
         uses: actions/checkout@v2.3.1
+
+      # 设置工作目录
+      - name: Set working directory
+        run: |
+          cd ${{ github.workspace }
+        
 
       # 设置环境变量版本号(RELEASE_VERSION)
       - name: Set Release version env variable
@@ -44,7 +51,7 @@ jobs:
           allowUpdates: true
           tag: "${{ env.RELEASE_VERSION }}"
           artifacts: "build/compose/jars/*.jar,build/compose/binaries/main/*/*"
-          token: ${{ secrets.GH_TOKEN }}
+          token: ${{ secrets.GITHUB_TOKEN  }}
 
   # Windows Package
   create-win-package:
@@ -67,7 +74,7 @@ jobs:
       # 设置环境变量版本号(RELEASE_VERSION)
       - name: Set Release version env variable
         run: |
-          echo "RELEASE_VERSION=$(mvn help:evaluate -Dexpression=project.version -q -DforceStdout)" >> $GITHUB_ENV
+          echo "RELEASE_VERSION=$(mvn help:evaluate -Dexpression=project.version -q -DforceStdout)" >> %GITHUB_ENV%
 
       # Build Desktop Uber Jar application
       - name: Desktop Uber Jar
@@ -85,7 +92,7 @@ jobs:
           allowUpdates: true
           tag: "${{ env.RELEASE_VERSION }}"
           artifacts: "build/compose/jars/*.jar,build/compose/binaries/main/*/*"
-          token: ${{ secrets.GH_TOKEN }}
+          token: ${{ secrets.GITHUB_TOKEN  }}
 
 
   create-mac-package:
@@ -126,4 +133,4 @@ jobs:
           allowUpdates: true
           tag: "${{ env.RELEASE_VERSION }}"
           artifacts: "build/compose/jars/*.jar,build/compose/binaries/main/*/*"
-          token: ${{ secrets.GH_TOKEN }}
+          token: ${{ secrets.GITHUB_TOKEN  }}
