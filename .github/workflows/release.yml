@@ -27,7 +27,7 @@ jobs:
       # 设置工作目录
       - name: Set working directory
         run: |
-          cd ${{ github.workspace }
+          cd ${{ github.workspace }}
         
 
       # 设置环境变量版本号(RELEASE_VERSION)
