@@ -69,16 +69,19 @@ jobs:
       - name: Set working directory
         run: |
           echo '${{ github.workspace }}'
-          cd "${{ github.workspace }}"
           
 
       # Build Desktop Uber Jar application
       - name: Desktop Uber Jar
-        run: ./gradlew packageUberJarForCurrentOS
+        run: |
+          cd "${{ github.workspace }}"
+          ./gradlew packageUberJarForCurrentOS
 
       # Build Desktop Packaged application
       - name: Desktop App Package
-        run: ./gradlew packageMsi
+        run: |
+          cd "${{ github.workspace }}"
+          ./gradlew packageMsi
 
       # Create a Draft Release
       - name: Draft Release
