@@ -76,7 +76,7 @@ compose.desktop {
 
 
             version = "v${versionInfo.version}"
-            description = versionInfo.desc
+            description = "something description"
             copyright = "© 2023 ${versionInfo.author}. All rights reserved."
 
             windows{
