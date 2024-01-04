@@ -40,8 +40,9 @@ jobs:
       - name: Draft Release
         uses: ncipollo/release-action@v1
         with:
-          draft: true
+          draft: false
           allowUpdates: true
+          generateReleaseNotes: true  #自动生成发行说明。
           tag: "${{ github.ref_name }}"
           artifacts: "${{ github.workspace }}/build/compose/jars/*.jar,${{ github.workspace }}/build/compose/binaries/main/deb/*.deb"
           token: ${{ secrets.GITHUB_TOKEN  }}
@@ -83,8 +84,9 @@ jobs:
       - name: Draft Release
         uses: ncipollo/release-action@v1
         with:
-          draft: true
+          draft: false
           allowUpdates: true
+          generateReleaseNotes: true  #自动生成发行说明。
           tag: "${{ github.ref_name }}"
           artifacts: "${{ github.workspace }}/build/compose/jars/*.jar,${{ github.workspace }}/build/compose/binaries/main/msi/*.msi"
           token: ${{ secrets.GITHUB_TOKEN  }}
@@ -119,8 +121,9 @@ jobs:
       - name: Draft Release
         uses: ncipollo/release-action@v1
         with:
-          draft: true
+          draft: false
           allowUpdates: true
+          generateReleaseNotes: true  #自动生成发行说明。
           tag: "${{ github.ref_name }}"
           artifacts: "${{ github.workspace }}/build/compose/jars/*.jar,${{ github.workspace }}/build/compose/binaries/main/dmg/*.dmg"
           token: ${{ secrets.GITHUB_TOKEN  }}
