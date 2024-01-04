@@ -69,7 +69,7 @@ jobs:
       - name: Set working directory
         run: |
           echo '${{ github.workspace }}'
-          cd /d "${{ github.workspace }}"
+          cd "${{ github.workspace }}"
           
 
       # Build Desktop Uber Jar application
