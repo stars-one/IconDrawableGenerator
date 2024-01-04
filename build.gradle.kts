@@ -75,6 +75,7 @@ compose.desktop {
             packageVersion = versionInfo.version
 
 
+            //坑,如果使用github打包,packageName,description和copyright不能使用中文!!!否则会出现working dir []的报错
             version = "v${versionInfo.version}"
             description = "something description"
             copyright = "© 2023 ${versionInfo.author}. All rights reserved."

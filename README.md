@@ -42,9 +42,17 @@
 
 - `remixicon_tags.json`是https://github.com/Remix-Design/RemixIcon/blob/master/tags.json的数据,也需要更新
 
+## 自动打包
+
+推送一个新的tag即可触发github action自动打包
+
+改了一个晚上github action脚本,终于成功了编译不同平台的二进制包了...
+
+> 注意: 如果使用github打包,`packageName`,`description` 和 `copyright` 不能使用中文!!!否则gradle会出现`working dir []`的报错
+
 # 致谢
 
-- 图标来源[Remix-Design/RemixIcon: Open source neutral style icon system](https://github.com/Remix-Design/RemixIcon)
+- 图标来源[Remix-Design/RemixIcon](https://github.com/Remix-Design/RemixIcon)
 - Toast组件实现参考[GangJust/AdbHelper: Android开发者必备的Adb便携工具](https://github.com/GangJust/AdbHelper)
 - svg转换代码参考[stars-one/svg2vector: svg文件转为android可用的xml矢量图标的工具库](https://github.com/stars-one/svg2vector)
 - action打包脚本参考[SpotiFlyer/.github/workflows/build-release-binaries.yml at main · Shabinder/SpotiFlyer](https://github.com/Shabinder/SpotiFlyer/blob/main/.github/workflows/build-release-binaries.yml)
